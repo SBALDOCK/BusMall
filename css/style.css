@@ -3,6 +3,19 @@ body{
   width: 100%;
 }
 
+header{
+  background-color: rgb(187, 181, 181);
+  height: 100px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h1{
+  font-size: 30px;
+  top: 30px;
+  position: relative;
+}
+
 #busMallParent{
   align-items: center;
   border: 5px solid rgb(154, 149, 149);
@@ -19,4 +32,18 @@ body{
 img{
   border: 2px solid rgb(154, 149, 149);
   width: 200px;
+}
+
+#chart{
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  text-align: center;
+  width: 80%;
+}
+
+#myChart{
+  border: 5px solid rgb(154, 149, 149);
+  border-radius: 30px;
 }
