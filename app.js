@@ -42,8 +42,8 @@ Catalog.prototype.addImage = function(){
   imageElement.setAttribute('src', this.filePath);
   //fill in alt
   imageElement.setAttribute('alt', this.alt);
-  // fill in title
-  imageElement.setAttribute('title', this.name);
+  // fill in name
+  imageElement.setAttribute('name', this.name);
   //append to parent element (parentElement)
   parentElement.appendChild(imageElement);
 };
@@ -80,21 +80,25 @@ function getRandomImage(){
 
 getRandomImage();
 
+
 // function handleClick(){
 //figure out which item was clicked on
 //increment the vote on the item and add to votes
 //call the getRandomImage function to generate new items on the page
 //}
+var totalRounds = 25;
 
 //set up an event listener
 parentElement.addEventListener('click', function(){
   var itemThatWasClickedOn = event.target.name;
-
-  for(var i = 0; i<allItems.length; i++){
-    if(itemThatWasClickedOn === allItems[i].name){
-      allItems[i].votes++;
+  for(var j = 0; j<25; j++){
+    for(var i = 0; i<allItems.length; i++){
+      if(itemThatWasClickedOn === allItems[i].name){
+        allItems[i].votes++;
+      }
     }
   }
+
 
   getRandomImage();
   //figure out which object instance was clicked on
@@ -103,3 +107,5 @@ parentElement.addEventListener('click', function(){
   //incremement the vote on that cat
   //call the getRandomImage function to generage new items to the page
 });
+
+
