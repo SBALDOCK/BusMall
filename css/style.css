@@ -1,24 +1,55 @@
 body{
-  display: inline-block;
   width: 100%;
 }
 
 header{
   background-color: rgb(187, 181, 181);
-  height: 100px;
-  margin-bottom: 30px;
-  text-align: center;
+  text-align: left;
 }
 
-h1{
-  font-size: 30px;
-  top: 30px;
-  position: relative;
+#container{
+  align-content: flex-end;
+  display: flex;
+  height: 75px;
+  justify-content: space-between;
+}
+
+#survey{
+  color: white;
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-left: 30px;
+  margin-top: 15px;
+
+}
+
+ul{
+  display: flex;
+  margin-right: 60px;
+  margin-top: 34px;
+}
+
+li{
+  border-top-left-radius: 10%;
+  border-top-right-radius: 10%;
+  border: 1px solid black;
+  border-bottom: none;
+  color: white;
+  height: 20px;
+  padding: 10px;
+  text-align: center;
+  width: 55px;
+}
+
+#instructions{
+  margin-top: 30px;
+  text-align: center;
 }
 
 #busMallParent{
   align-items: center;
-  border: 5px solid rgb(154, 149, 149);
+  background-color: rgb(233, 225, 225);
+  border: 5px solid rgb(187, 181, 181);
   border-radius: 30px;
   display: flex;
   justify-content: space-around;
@@ -30,8 +61,26 @@ h1{
 }
 
 img{
-  border: 2px solid rgb(154, 149, 149);
+  /* border: 2px solid rgb(227, 221, 221); */
+  box-shadow: 5px 5px 5px rgb(142, 137, 137);
   width: 200px;
+}
+
+img:hover{
+  /* border: 4px solid rgb(154, 149, 149); */
+  box-shadow: 8px 8px 8px rgb(142, 137, 137);
+  cursor: pointer;
+}
+
+#thankyou{
+  margin-top: 30px;
+  text-align: center;
+}
+
+h1{
+  color: maroon;
+  font-size: 2em;
+  font-weight: bold;
 }
 
 #chart{
@@ -43,7 +92,7 @@ img{
   width: 80%;
 }
 
-#myChart{
+/* #myChart{
   border: 5px solid rgb(154, 149, 149);
   border-radius: 30px;
-}
+} */
