@@ -2,10 +2,10 @@
 
 //global variables
 var parentElement = document.getElementById('busMallParent');
-var thankYou = document.getElementById('thankyou');
 var uniqueIndexArray = [];
 var allItems = [];
 var totalVotes = 0;
+
 
 //constructor function
 function Catalog(name, extension){
@@ -40,6 +40,28 @@ new Catalog( 'usb', '.gif');
 new Catalog('water-can', '.jpg');
 new Catalog('wine-glass', '.jpg');
 
+// convert allItems array to JSON
+var stringifiedItems = JSON.stringify(allItems);
+console.log(stringifiedItems);
+
+// Send JSON converted array to localStorage
+localStorage.setItem('items', stringifiedItems);
+
+// Call JSON converted array from localStorage
+var itemsFromLocalStorage = localStorage.getItem('items');
+console.log('This is my items from local storage', itemsFromLocalStorage);
+
+// Convert JSON back into Javascript
+var itemsBackIntoJavaScript = JSON.parse(itemsFromLocalStorage);
+console.log('my parsed items', itemsBackIntoJavaScript);
+
+// run itemsBackIntoJavaScript array through a for loop to push back into the object constructor function above
+// var parsedData =
+function sendBackToConstructor(){
+  for( var i = 0; i < itemsBackIntoJavaScript.length; i++);
+  allItems.push(itemsBackIntoJavaScript[i]);
+}
+
 //create image element and retrieve images
 Catalog.prototype.addImage = function(){
   var imageElement = document.createElement('img');
@@ -48,14 +70,6 @@ Catalog.prototype.addImage = function(){
   imageElement.title = this.title;
   parentElement.appendChild(imageElement);
 };
-
-//post-survey thank you message
-function youVoted(){
-  var feedback = document.createElement('h1');
-  feedback.textContent = 'Thank you for your feedback!';
-  thankYou.appendChild(feedback);
-}
-
 
 //helper function
 function randomNumber(max){
@@ -78,9 +92,8 @@ function getRandomImage(){
 
   uniqueIndexArray.push(index);
 
-  //Preventing the current three images to match any of the previous three shown
-
-  if(uniqueIndexArray.length > 6){
+  //Preventing the current 3 images to match any of the previous 9 shown
+  if(uniqueIndexArray.length > 9){
     uniqueIndexArray.shift();
   }
 
@@ -89,27 +102,24 @@ function getRandomImage(){
 
 //event handler
 function handleClick(event){
-  parentElement.textContent = '';
+  // parentElement.textContent = '';
   var titleThatWasClickedOn = event.target.title;
-
   for( var i = 0; i<allItems.length; i++){
     if(titleThatWasClickedOn === allItems[i].title){
       allItems[i].votes++;
       totalVotes++;
-
       if(totalVotes === 25){
         //turn off event listener
         parentElement.removeEventListener('click', handleClick);
+        // parentElement.textContent = '';
         makeNamesArray();
-
       }
     }
   }
-
+  parentElement.textContent= '';
   displayImage();
   displayImage();
   displayImage();
-
 }
 
 displayImage();
@@ -118,7 +128,7 @@ displayImage();
 
 //event listener
 parentElement.addEventListener('click', handleClick);
-
+// event.preventDefault();
 
 var names = [];
 var votes = [];
@@ -129,40 +139,43 @@ function makeNamesArray(){
     votes.push(allItems[i].votes);
     views.push(allItems[i].views);
   }
-  youVoted();
+
+  sendBackToConstructor();
   generateChart();
+  parentElement.textContent = '';
+  youVoted();
 }
 
 function generateChart(){
   var ctx = document.getElementById('myChart').getContext('2d');
   var myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'horizontalBar',
     data: {
       labels: names,
       datasets: [{
         label: '# of Votes',
         data: votes,
         backgroundColor: [
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)',
-          'rgba(128, 0, 0, 0.2)'
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)',
+          'rgba(128, 0, 0, 0.5)'
         ],
         borderColor: [
           'rgba(71, 31, 31, 1)',
@@ -192,26 +205,26 @@ function generateChart(){
         label: '# of Views',
         data: views,
         backgroundColor: [
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)',
-          'rgba(117, 113, 113, 0.2)'
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)',
+          'rgba(117, 113, 113, 0.5)'
         ],
         borderColor: [
           'rgba(47, 44, 44, 1)',
@@ -250,25 +263,19 @@ function generateChart(){
   });
 }
 
+//post-survey thank you message
+function youVoted(){
+  var feedback = document.createElement('h1');
+  feedback.textContent = 'Thank you for your feedback!';
+  parentElement.appendChild(feedback);
+}
 
 
-// function handleClick(){
-//figure out which item was clicked on
-//increment the vote on the item and add to votes
-//call the getRandomImage function to generate new items on the page
-//}
-// var totalRounds = 25;
 
-//set up an event listener
-// parentElement.addEventListener('click', function(){
-//   var itemThatWasClickedOn = event.target.title;
-//   for(var j = 0; j<25; j++){
-//     for(var i = 0; i<allItems.length; i++){
-//       if(itemThatWasClickedOn === allItems[i].title){
-//         allItems[i].votes++;
-//       }
-//     }
-//   }
+
+
+
+
 
 
 
