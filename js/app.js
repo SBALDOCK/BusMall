@@ -6,60 +6,56 @@ var uniqueIndexArray = [];
 var allItems = [];
 var totalVotes = 0;
 
+//check local storage to see if there is an array of products
+if(localStorage.getItem('items') === null){
+
+  //Object instances
+  new Catalog('bag', '.jpg');
+  new Catalog('banana', '.jpg');
+  new Catalog('bathroom', '.jpg');
+  new Catalog('boots', '.jpg');
+  new Catalog('breakfast', '.jpg');
+  new Catalog('bubblegum', '.jpg');
+  new Catalog( 'chair', '.jpg');
+  new Catalog('cthulhu', '.jpg');
+  new Catalog('dog-duck', '.jpg');
+  new Catalog('dragon', '.jpg');
+  new Catalog( 'pen', '.jpg');
+  new Catalog('pet-sweep', '.jpg');
+  new Catalog('scissors', '.jpg');
+  new Catalog('shark', '.jpg');
+  new Catalog('sweep', '.png');
+  new Catalog('tauntaun', '.jpg');
+  new Catalog('unicorn', '.jpg');
+  new Catalog( 'usb', '.gif');
+  new Catalog('water-can', '.jpg');
+  new Catalog('wine-glass', '.jpg');
+
+} else {
+  // Get items from local storage
+  var itemsFromLocalStorage = localStorage.getItem('items');
+  // Convert back to JavaScript
+  var itemsBackIntoJavaScript = JSON.parse(itemsFromLocalStorage);
+  console.log('this is my parsed array', itemsBackIntoJavaScript);
+
+  // Send parsed data back to allItems array
+  for(var i = 0; i<itemsBackIntoJavaScript.length; i++){
+    new Catalog(
+      itemsBackIntoJavaScript[i].title,
+      itemsBackIntoJavaScript[i].filePath.slice(itemsBackIntoJavaScript[i].filePath.length-4),
+      itemsBackIntoJavaScript[i].views,
+      itemsBackIntoJavaScript[i].votes);
+  }
+}
 
 //constructor function
-function Catalog(name, extension){
+function Catalog(name, extension, views=0, votes=0){
   this.filePath = `pics/${name}${extension}`;
   this.alt = name;
   this.title = name;
-  this.votes = 0;
-  this.views = 0;
-  // this.percentage = percentage;
+  this.votes = votes;
+  this.views = views;
   allItems.push(this);
-}
-
-//Object instances
-new Catalog('bag', '.jpg');
-new Catalog('banana', '.jpg');
-new Catalog('bathroom', '.jpg');
-new Catalog('boots', '.jpg');
-new Catalog('breakfast', '.jpg');
-new Catalog('bubblegum', '.jpg');
-new Catalog( 'chair', '.jpg');
-new Catalog('cthulhu', '.jpg');
-new Catalog('dog-duck', '.jpg');
-new Catalog('dragon', '.jpg');
-new Catalog( 'pen', '.jpg');
-new Catalog('pet-sweep', '.jpg');
-new Catalog('scissors', '.jpg');
-new Catalog('shark', '.jpg');
-new Catalog('sweep', '.png');
-new Catalog('tauntaun', '.jpg');
-new Catalog('unicorn', '.jpg');
-new Catalog( 'usb', '.gif');
-new Catalog('water-can', '.jpg');
-new Catalog('wine-glass', '.jpg');
-
-// convert allItems array to JSON
-var stringifiedItems = JSON.stringify(allItems);
-console.log(stringifiedItems);
-
-// Send JSON converted array to localStorage
-localStorage.setItem('items', stringifiedItems);
-
-// Call JSON converted array from localStorage
-var itemsFromLocalStorage = localStorage.getItem('items');
-console.log('This is my items from local storage', itemsFromLocalStorage);
-
-// Convert JSON back into Javascript
-var itemsBackIntoJavaScript = JSON.parse(itemsFromLocalStorage);
-console.log('my parsed items', itemsBackIntoJavaScript);
-
-// run itemsBackIntoJavaScript array through a for loop to push back into the object constructor function above
-// var parsedData =
-function sendBackToConstructor(){
-  for( var i = 0; i < itemsBackIntoJavaScript.length; i++);
-  allItems.push(itemsBackIntoJavaScript[i]);
 }
 
 //create image element and retrieve images
@@ -108,14 +104,19 @@ function handleClick(event){
     if(titleThatWasClickedOn === allItems[i].title){
       allItems[i].votes++;
       totalVotes++;
+
+      //save allItems array into local storage - this captures all votes even if they don't finish voting
+      var stringifiedItems = JSON.stringify(allItems);
+      localStorage.setItem('items', stringifiedItems);
+
       if(totalVotes === 25){
         //turn off event listener
         parentElement.removeEventListener('click', handleClick);
-        // parentElement.textContent = '';
         makeNamesArray();
       }
     }
   }
+
   parentElement.textContent= '';
   displayImage();
   displayImage();
@@ -140,7 +141,6 @@ function makeNamesArray(){
     views.push(allItems[i].views);
   }
 
-  sendBackToConstructor();
   generateChart();
   parentElement.textContent = '';
   youVoted();
