@@ -129,7 +129,6 @@ displayImage();
 
 //event listener for click event
 parentElement.addEventListener('click', handleClick);
-event.preventDefault();
 
 var names = [];
 var votes = [];

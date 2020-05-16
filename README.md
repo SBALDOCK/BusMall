@@ -1,9 +1,27 @@
 # BusMall
 Code 201 Week 3 Assignment - BusMall
 
+### Overview of Application
+
+BusMall is a consumer survey application built for the purpose of collecting user feedback about an array of potential BusMall retail products to be sold in BusMall catalogs. BusMall catalogs are placed on Puget Sond regional transit system buses, similar to it's forebearer, the SkyMall catalog. 
+
+BusMall consists of a series of 25 rounds of photo displays. The user is instructed to select their favorite image amongst the three images presented simultaneously. No image presented matches that of either or of the other two photos on the page, nor any of the previously 9 presented photos. 
+
+At the conclusion of the voting rounds, the user is presented with a bar graph that measures two results. The first is the total views that each image had over the course of 25 rounds of presentation. The second is the total number of votes that each image received.
+
+The site is built to collect continuing voter data through the use of localStorage, which can be cleared at any time by the site administator. 
+
+With this consumer input, BusMall is poised to launch a series of high-markup products that have the highest likelihood to sell.
+
+Thank you,
+
+Steve
+
+
+
+
 # Assignment Overview: Lab 11
 
-## BusMall
 
 ### Backstory
 
