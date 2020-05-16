@@ -48,7 +48,7 @@ if(localStorage.getItem('items') === null){
   }
 }
 
-//constructor function
+//constructor function for new items
 function Catalog(name, extension, views=0, votes=0){
   this.filePath = `pics/${name}${extension}`;
   this.alt = name;
@@ -67,7 +67,7 @@ Catalog.prototype.addImage = function(){
   parentElement.appendChild(imageElement);
 };
 
-//helper function
+//helper function to help generate random photos
 function randomNumber(max){
   return Math.floor(Math.random() * max);
 }
@@ -127,9 +127,9 @@ displayImage();
 displayImage();
 displayImage();
 
-//event listener
+//event listener for click event
 parentElement.addEventListener('click', handleClick);
-// event.preventDefault();
+event.preventDefault();
 
 var names = [];
 var votes = [];
@@ -146,6 +146,7 @@ function makeNamesArray(){
   youVoted();
 }
 
+// Chart.js to generate results
 function generateChart(){
   var ctx = document.getElementById('myChart').getContext('2d');
   var myChart = new Chart(ctx, {
